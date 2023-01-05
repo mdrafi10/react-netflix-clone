@@ -51,13 +51,13 @@ function FormInput({
             {inputType === "password" ? (
               <AiFillEye
                 onClick={() => setInputType("text")}
-                className={`absolute z-20 cursor-pointer right-0 mr-4 text-[#63CF50]`}
+                className={`absolute z-20 cursor-pointer right-0 mr-4 text-gray-400`}
                 size={23}
               />
             ) : (
               <AiFillEyeInvisible
                 onClick={() => setInputType("password")}
-                className={`absolute z-20 cursor-pointer right-0 mr-4 text-[#63CF50]`}
+                className={`absolute z-20 cursor-pointer right-0 mr-4 text-gray-400`}
                 size={23}
               />
             )}

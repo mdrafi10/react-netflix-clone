@@ -1,7 +1,7 @@
 import React from "react";
-import { AppForm, FormInput, FormBtn } from "../Components/shared/Form";
+import { AppForm, FormInput, FormBtn } from "../shared/Form";
 import * as Yup from "yup";
-import { auth, db } from "../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 import firebase from "firebase/app";
 
 const validationSchema = Yup.object().shape({
@@ -58,29 +58,11 @@ const Auth = () => {
 
   return (
     <div className="p-5">
-      <div className="mx-auto max-w-[350px] rounded-md bg-gray-200 my-10 p-5">
-        <div className="flex items-center gap-5 text-2xl font-semibold justify-center uppercase pb-4 border-b border-b-gray-300">
-          <h1
-            className={`${
-              isLogin ? "text-gray-700" : "text-gray-400"
-            } cursor-pointer`}
-            onClick={() => setIsLogin(true)}
-          >
-            Login
-          </h1>
-          <h1
-            className={`${
-              !isLogin ? "text-gray-700" : "text-gray-400"
-            } cursor-pointer`}
-            onClick={() => setIsLogin(false)}
-          >
-            Register
-          </h1>
-        </div>
+      <div className="mx-auto max-w-[480px] rounded-md bg-loginBg my-10 p-[40px] md:p-[70px]">
+        <h1 className="text-4xl font-semibold text-white mb-3">
+          {isLogin ? "Sign In" : "Sign Up"}
+        </h1>
         <div className="py-5">
-          <p className="text-center mb-5">
-            {isLogin ? "Log In To Your Account" : "Create a new account"}
-          </p>
           <AppForm
             initialValues={{
               email: "",
@@ -91,21 +73,29 @@ const Auth = () => {
           >
             <FormInput name="email" placeholder="Email" type="email" />
             <FormInput name="password" placeholder="Password" type="password" />
-            <FormBtn title={isLogin ? "Login" : "Register"} />
+            <FormBtn title={isLogin ? "Sign In" : "Sign up"} />
           </AppForm>
           <div>
-            <p className="text-center mt-5">Or</p>
-            <div className="flex items-center justify-center gap-5 mt-5">
-              <button
+            <p className="text-center mt-5 text-gray-300">Or</p>
+            <p className="mt-5 text-gray-400 text-center">
+              Sign In with{" "}
+              <span
                 onClick={loginWIthGoogle}
-                className="bg-[#DB4437] text-white px-5 py-2 rounded-md"
+                className="text-blue-500 font-semibold cursor-pointer hover:underline"
               >
                 Google
-              </button>
-              <button className="bg-[#4267B2] text-white px-5 py-2 rounded-md">
-                Facebook
-              </button>
-            </div>
+              </span>
+            </p>
+
+            <p className="mt-5 text-gray-400 text-lg text-center">
+              {isLogin ? "New to Netflix?" : "Already have an account?"}
+              <span
+                onClick={() => setIsLogin((o) => !o)}
+                className="text-white font-medium cursor-pointer ml-1 hover:underline"
+              >
+                {isLogin ? "Sign up now." : "Sign In"}
+              </span>
+            </p>
           </div>
         </div>
       </div>
