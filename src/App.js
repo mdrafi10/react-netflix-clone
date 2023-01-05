@@ -1,13 +1,42 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Layouts from "./app/layouts";
-import { Provider } from "react-redux";
-import { store } from "./app/redux/store";
+import { removeUser, updateUser } from "./app/redux/slices/authSlice";
+import { auth, db } from "./app/utils/firebase";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // firebase user listeners
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          updateUser({
+            email: user.email,
+            name: user.displayName,
+            image: user.photoURL,
+          })
+        );
+        db.collection("users")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              dispatch(updateUser(doc.data()));
+            }
+          });
+      } else {
+        dispatch(removeUser());
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   return (
-    <div className="bg-[#111]">
-      <Provider store={store}>
-        <Layouts />
-      </Provider>
+    <div className="bg-[#141414]">
+      <Layouts />
     </div>
   );
 }

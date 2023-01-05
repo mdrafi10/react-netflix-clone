@@ -44,22 +44,27 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
 
   return (
     <>
-      <div className="row">
+      <div className="text-[#fff] ml-[20px] text-[20px] sm:text-[24px] font-medium">
         <h2>{title}</h2>
 
-        <div className="row_posters">
+        <div className="flex overflow-y-hidden overflow-x-scroll p-[20px] row_posters gap-[12px]">
           {/* several row__poster(s) */}
           {movies.map((movie) => {
             return (
-              <img
-                src={`${base_url}${
-                  isLargeRow ? movie.poster_path : movie.backdrop_path
-                }`}
-                className={`row_poster_img ${isLargeRow && "row__posterLarge"}`}
-                alt={movie.name}
-                key={movie.id}
-                onClick={() => handleClick(movie)}
-              />
+              ((isLargeRow && movie.poster_path) ||
+                (!isLargeRow && movie.backdrop_path)) && (
+                <img
+                  src={`${base_url}${
+                    isLargeRow ? movie.poster_path : movie.backdrop_path
+                  }`}
+                  className={`object-contain w-full max-h-[110px] sm:max-h-[135px] duration-500 hover:scale-[1.08] ${
+                    isLargeRow && "!max-h-[250px] hover:scale-[1.09]"
+                  }`}
+                  alt={movie.name}
+                  key={movie.id}
+                  onClick={() => handleClick(movie)}
+                />
+              )
             );
           })}
         </div>
