@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const [show, handleShow] = useState(false);
+  const navigate = useNavigate();
+
   const nav = () => {
     window.scrollY > 100 ? handleShow(true) : handleShow(false);
   };
@@ -23,12 +25,13 @@ const Nav = () => {
             src="images/netflix-logo1.png"
             alt="netflix logo"
             className="w-[100px] object-contain cursor-pointer"
+            onClick={() => navigate("/")}
           />
           <img
             src="images/avatar.png"
             alt="profile"
             className=" w-[40px] object-contain cursor-pointer"
-            onClick={() => auth.signOut()}
+            onClick={() => navigate("/profile")}
           />
         </div>
       </div>

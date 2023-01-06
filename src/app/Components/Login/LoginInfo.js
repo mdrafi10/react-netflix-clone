@@ -12,7 +12,7 @@ function LoginInfo({ setSignIn }) {
       <p className="text-center text-white text-[20px]">
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <from className="flex flex-col sm:flex-row w-[90%] md:w-[75%] xl:w-[46%] 2xl:w-[38%] justify-center items-center gap-6 sm:gap-[1px]">
+      <form className="flex flex-col sm:flex-row w-[90%] md:w-[75%] xl:w-[46%] 2xl:w-[38%] justify-center items-center gap-6 sm:gap-[1px]">
         <input
           type="email"
           className="bg-white p-3 md:p-[18px] xl:p-4 2xl:p-[22px] w-full sm:w-[62%] outline-none"
@@ -24,7 +24,7 @@ function LoginInfo({ setSignIn }) {
         >
           Get Started
         </button>
-      </from>
+      </form>
     </div>
   );
 }

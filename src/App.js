@@ -13,6 +13,7 @@ function App() {
       if (user) {
         dispatch(
           updateUser({
+            uid: user.uid,
             email: user.email,
             name: user.displayName,
             image: user.photoURL,
@@ -32,7 +33,7 @@ function App() {
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="bg-[#141414]">
