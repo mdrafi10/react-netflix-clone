@@ -10,6 +10,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
+  const [productID, setProductID] = useState(null);
   const localUser = fetchUser();
   const user = useSelector(selectUser) || localUser;
   const [subscription, setSubscription] = useState(null);
@@ -54,6 +55,8 @@ function PlansScreen({ title, pixel, onClick, subs }) {
   }, []);
 
   const loadCheckOut = async (priceId) => {
+    setProductID(priceId);
+    setLoading1(true);
     const docRef = await db
       .collection("customers")
       .doc(user.uid)
@@ -63,7 +66,6 @@ function PlansScreen({ title, pixel, onClick, subs }) {
         success_url: window.location.origin,
         cancel_url: window.location.origin,
       });
-
     docRef.onSnapshot(async (snap) => {
       const { error, sessionId } = snap.data();
 
@@ -77,8 +79,8 @@ function PlansScreen({ title, pixel, onClick, subs }) {
         stripe.redirectToCheckout({ sessionId });
       }
     });
+    setLoading1(false);
   };
-  console.log("subscription", subscription);
 
   return (
     <div>
@@ -123,7 +125,13 @@ function PlansScreen({ title, pixel, onClick, subs }) {
               disabled={isCurrentPackage ? true : false}
             >
               {loading1 ? (
-                <Loader loading={loading1} />
+                productData.prices.priceId === productID ? (
+                  <Loader loading={loading1} />
+                ) : isCurrentPackage ? (
+                  "Current Package"
+                ) : (
+                  "Subscribe"
+                )
               ) : isCurrentPackage ? (
                 "Current Package"
               ) : (
