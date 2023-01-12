@@ -5,9 +5,11 @@ import Netflix from "./Netflix";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginScreen from "./LoginScreen";
 import Profile from "../Components/Profile";
+import { fetchUser } from "../utils/fetchUser";
 
 function Layouts() {
-  const user = useSelector(selectUser);
+  const localUser = fetchUser();
+  const user = useSelector(selectUser) || localUser;
   // const user = null;
 
   return (

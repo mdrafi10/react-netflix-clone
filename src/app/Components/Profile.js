@@ -1,12 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/authSlice";
+import { fetchUser } from "../utils/fetchUser";
 import { auth } from "../utils/firebase";
 import Nav from "./Nav";
 import PlansScreen from "./PlansScreen";
 
 function Profile() {
-  const user = useSelector(selectUser);
+  const localUser = fetchUser();
+  const user = useSelector(selectUser) || localUser;
 
   return (
     <div>
@@ -24,7 +26,7 @@ function Profile() {
             />
             <div className="sm:flex-1 w-full sm:w-auto">
               <h3 className="text-sm font-bold text-white bg-gray-500 py-2 px-4">
-                {user.email}
+                {user?.email}
               </h3>
               {/* Subscribe plans*/}
               <PlansScreen />

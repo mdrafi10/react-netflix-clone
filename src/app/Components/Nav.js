@@ -29,6 +29,7 @@ const Nav = () => {
           />
           <img
             src="images/avatar.png"
+            title="Profile"
             alt="profile"
             className=" w-[40px] object-contain cursor-pointer"
             onClick={() => navigate("/profile")}

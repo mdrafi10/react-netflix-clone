@@ -11,14 +11,14 @@ function App() {
     // firebase user listeners
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch(
-          updateUser({
-            uid: user.uid,
-            email: user.email,
-            name: user.displayName,
-            image: user.photoURL,
-          })
-        );
+        const userInfo = {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          image: user.photoURL,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfo));
+        dispatch(updateUser(userInfo));
         db.collection("users")
           .doc(user.uid)
           .get()
@@ -29,6 +29,7 @@ function App() {
           });
       } else {
         dispatch(removeUser());
+        localStorage.clear();
       }
     });
 

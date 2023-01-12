@@ -3,10 +3,15 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/authSlice";
 import { db } from "../utils/firebase";
 import { loadStripe } from "@stripe/stripe-js";
+import { fetchUser } from "../utils/fetchUser";
+import Loader from "./shared/Loader";
 
 function PlansScreen({ title, pixel, onClick, subs }) {
   const [products, setProducts] = useState([]);
-  const user = useSelector(selectUser);
+  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
+  const localUser = fetchUser();
+  const user = useSelector(selectUser) || localUser;
   const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {
@@ -27,6 +32,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
   }, [user.uid]);
 
   useEffect(() => {
+    setLoading(true);
     db.collection("products")
       .where("active", "==", true)
       .get()
@@ -43,6 +49,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
           });
         });
         setProducts(products);
+        setLoading(false);
       });
   }, []);
 
@@ -71,6 +78,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
       }
     });
   };
+  console.log("subscription", subscription);
 
   return (
     <div>
@@ -79,7 +87,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
           !subscription && "mb-8"
         }`}
       >
-        Plans{" "}
+        Plans {loading && <Loader loading={loading} />}
         {subscription && <span>(Current Plan: {subscription?.role})</span>}
       </h3>
       {subscription && (
@@ -114,7 +122,13 @@ function PlansScreen({ title, pixel, onClick, subs }) {
               } font-semibold border-none`}
               disabled={isCurrentPackage ? true : false}
             >
-              {isCurrentPackage ? "Current Package" : "Subscribe"}
+              {loading1 ? (
+                <Loader loading={loading1} />
+              ) : isCurrentPackage ? (
+                "Current Package"
+              ) : (
+                "Subscribe"
+              )}
             </button>
           </div>
         );
