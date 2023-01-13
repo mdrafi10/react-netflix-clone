@@ -78,10 +78,10 @@ const Auth = () => {
           <div>
             <p className="text-center mt-5 text-gray-300">Or</p>
             <p className="mt-5 text-gray-400 text-center">
-              Sign In with{" "}
+              {isLogin ? "Sign In with" : "Sign up with"}
               <span
                 onClick={loginWIthGoogle}
-                className="text-blue-500 font-semibold cursor-pointer hover:underline"
+                className="text-blue-500 font-semibold cursor-pointer hover:underline ml-1"
               >
                 Google
               </span>
