@@ -11,7 +11,7 @@ import "firebase/auth";
 //   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
 //   appId: process.env.FIREBASE_APP_ID,
 // };
-console.log(process.env.FIREBASE_API_KEY);
+// console.log(process.env.FIREBASE_API_KEY);
 const firebaseConfig = {
   apiKey: "AIzaSyCnINlTd5PMyOGVQGXseiS5kEswBdwIVHU",
   authDomain: "netflix-clone-yt-668ee.firebaseapp.com",
@@ -31,3 +31,10 @@ const db = firebase.firestore();
 // const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export { auth, db };
+
+// FIREBASE_API_KEY=AIzaSyCnINlTd5PMyOGVQGXseiS5kEswBdwIVHU
+// FIREBASE_AUTH_DOMAIN="netflix-clone-yt-668ee.firebaseapp.com"
+// FIREBASE_PROJECT_ID="netflix-clone-yt-668ee"
+// FIREBASE_STORAGE_BUCKET="netflix-clone-yt-668ee.appspot.com"
+// FIREBASE_MESSAGING_SENDER_ID="219552925972"
+// FIREBASE_APP_ID="1:219552925972:web:6bb9f65dee750ea4199a01"
