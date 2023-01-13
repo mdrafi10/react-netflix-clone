@@ -126,7 +126,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
             >
               {loading1 ? (
                 productData.prices.priceId === productID ? (
-                  <Loader loading={loading1} />
+                  <Loader loading={loading1} subs />
                 ) : isCurrentPackage ? (
                   "Current Package"
                 ) : (
