@@ -13,6 +13,7 @@ function Layouts() {
   const localUser = fetchUser();
   const user = useSelector(selectUser) || localUser;
   // const user = {};
+  // console.log("ju");
 
   return (
     <div>
