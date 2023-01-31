@@ -11,8 +11,8 @@ import TubePlayer from "../Components/TubePlayer";
 
 function Layouts() {
   const localUser = fetchUser();
-  // const user = useSelector(selectUser) || localUser;
-  const user = {};
+  const user = useSelector(selectUser) || localUser;
+  // const user = {};
 
   return (
     <div>
