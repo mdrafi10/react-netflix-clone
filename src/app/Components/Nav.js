@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BasicMenu from "./BasicMenu";
+import { BellIcon, SearchIcon } from "@heroicons/react/solid";
 
 const Nav = () => {
   const [show, handleShow] = useState(false);
@@ -21,19 +23,41 @@ const Nav = () => {
         }`}
       >
         <div className="flex justify-between">
-          <img
-            src="images/netflix-logo1.png"
-            alt="netflix logo"
-            className="w-[100px] object-contain cursor-pointer"
-            onClick={() => navigate("/")}
-          />
-          <img
-            src="images/avatar.png"
-            title="Profile"
-            alt="profile"
-            className=" w-[40px] object-contain cursor-pointer"
-            onClick={() => navigate("/profile")}
-          />
+          {/* Left */}
+          <div className="flex items-center space-x-2 md:space-x-10">
+            <img
+              src="images/netflix-logo1.png"
+              alt="netflix logo"
+              className="w-[100px] object-contain cursor-pointer"
+              onClick={() => navigate("/")}
+            />
+
+            <BasicMenu />
+
+            <ul className="hidden space-x-4 md:flex">
+              <li className="headerLink cursor-default font-semibold text-white hover:text-white">
+                Home
+              </li>
+              <li className="headerLink">TV Shows</li>
+              <li className="headerLink">Movies</li>
+              <li className="headerLink">New & Popular</li>
+              <li className="headerLink">My List</li>
+            </ul>
+          </div>
+
+          {/* right */}
+          <div className="flex items-center space-x-4 text-sm font-light text-white">
+            <SearchIcon className="sm hidden h-6 w-6 sm:inline" />
+            <p className="hidden lg:inline">Kids</p>
+            <BellIcon className="h-6 w-6" />
+            <img
+              src="images/avatar.png"
+              title="Profile"
+              alt="profile"
+              className=" w-[40px] object-contain cursor-pointer"
+              onClick={() => navigate("/profile")}
+            />
+          </div>
         </div>
       </div>
     </>

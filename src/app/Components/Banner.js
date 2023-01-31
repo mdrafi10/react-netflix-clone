@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import requests from "../Request/request";
+import movieTrailer from "movie-trailer";
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);
+  const [trailerUrl, setTrailerUrl] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -17,10 +21,37 @@ const Banner = () => {
     }
     fetchData();
   }, []);
-  // console.log(movie);
+  console.log(movie);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const request = await axios.get(requests.fetchVideos);
+  //     console.log("request: ", request);
+  //   }
+  //   fetchData();
+  // }, []);
+
   function truncate(str, num) {
     return str?.length > num ? str.substr(0, num - 1) + "..." : str;
   }
+
+  const handleClick = (movie) => {
+    // console.log(movie);
+    if (trailerUrl) {
+      setTrailerUrl("");
+    } else {
+      movieTrailer(movie?.name || "")
+        .then((url) => {
+          // https://www.youtube.com/watch?v=XtMThy8QKqU
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get("v"));
+        })
+        .catch((error) => console.log(error));
+    }
+    trailerUrl
+      ? navigate({ pathname: "/tuber", search: `id=${trailerUrl}` })
+      : navigate("/player");
+  };
 
   return (
     <>
@@ -37,7 +68,10 @@ const Banner = () => {
             {movie?.title || movie?.name || movie?.original_name}
           </h1>
           <div className="banner__buttons">
-            <button className="cursor-pointer text-white outline-none border-none font-bold px-8 mr-4 pt-2 bg-buttonBg pb-2 rounded-[0.2vw] hover:text-[#000] hover:bg-[#e6e6e6] transition-all">
+            <button
+              className="cursor-pointer text-white outline-none border-none font-bold px-8 mr-4 pt-2 bg-buttonBg pb-2 rounded-[0.2vw] hover:text-[#000] hover:bg-[#e6e6e6] transition-all"
+              onClick={handleClick}
+            >
               Play
             </button>
             <button className="cursor-pointer text-white outline-none border-none font-bold px-8 mr-4 pt-2 bg-buttonBg pb-2 rounded-[0.2vw] hover:text-[#000] hover:bg-[#e6e6e6] transition-all">
