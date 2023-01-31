@@ -6,7 +6,6 @@ import movieTrailer from "movie-trailer";
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);
-  const [trailerUrl, setTrailerUrl] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,36 +20,23 @@ const Banner = () => {
     }
     fetchData();
   }, []);
-  console.log(movie);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const request = await axios.get(requests.fetchVideos);
-  //     console.log("request: ", request);
-  //   }
-  //   fetchData();
-  // }, []);
 
   function truncate(str, num) {
     return str?.length > num ? str.substr(0, num - 1) + "..." : str;
   }
 
-  const handleClick = (movie) => {
-    // console.log(movie);
-    if (trailerUrl) {
-      setTrailerUrl("");
-    } else {
-      movieTrailer(movie?.name || "")
-        .then((url) => {
-          // https://www.youtube.com/watch?v=XtMThy8QKqU
-          const urlParams = new URLSearchParams(new URL(url).search);
-          setTrailerUrl(urlParams.get("v"));
-        })
-        .catch((error) => console.log(error));
-    }
-    trailerUrl
-      ? navigate({ pathname: "/tuber", search: `id=${trailerUrl}` })
-      : navigate("/player");
+  const handleClick = () => {
+    movieTrailer(movie?.name || "")
+      .then((url) => {
+        // https://www.youtube.com/watch?v=XtMThy8QKqU
+        const urlParams = new URLSearchParams(new URL(url).search);
+        const urlP = urlParams.get("v");
+        navigate({ pathname: "/tuber", search: `id=${urlP}` });
+      })
+      .catch((error) => {
+        console.log(error);
+        navigate("/player");
+      });
   };
 
   return (
