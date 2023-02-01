@@ -5,3 +5,7 @@ export const setBackgroundImage = (url, style) => ({
   backgroundRepeat: "no-repeat",
   ...style,
 });
+
+export function truncate(str, num) {
+  return str?.length > num ? str.substr(0, num - 1) + "..." : str;
+}

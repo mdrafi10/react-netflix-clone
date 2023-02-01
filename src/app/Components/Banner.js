@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import requests from "../Request/request";
 import movieTrailer from "movie-trailer";
+import { truncate } from "../utils/helpers";
+
+import { FaPlay } from "react-icons/fa";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);
@@ -20,10 +24,6 @@ const Banner = () => {
     }
     fetchData();
   }, []);
-
-  function truncate(str, num) {
-    return str?.length > num ? str.substr(0, num - 1) + "..." : str;
-  }
 
   const handleClick = () => {
     movieTrailer(movie?.name || "")
@@ -50,18 +50,20 @@ const Banner = () => {
         }}
       >
         <div className="ml-[30px] pt-[140px]">
-          <h1 className="text-[40px] sm:text-[55px] font-extrabold pb-[5px]">
+          <h1 className="text-[40px] sm:text-[55px] font-extrabold pb-[20px]">
             {movie?.title || movie?.name || movie?.original_name}
           </h1>
-          <div className="banner__buttons">
+          <div className="flex gap-3">
             <button
-              className="cursor-pointer text-white outline-none border-none font-bold px-8 mr-4 pt-2 bg-buttonBg pb-2 rounded-[0.2vw] hover:text-[#000] hover:bg-[#e6e6e6] transition-all"
+              className="bannerButton bg-white text-black"
               onClick={handleClick}
             >
+              <FaPlay className="h-4 w-4 text-black md:h-7 md:w-7" />
               Play
             </button>
-            <button className="cursor-pointer text-white outline-none border-none font-bold px-8 mr-4 pt-2 bg-buttonBg pb-2 rounded-[0.2vw] hover:text-[#000] hover:bg-[#e6e6e6] transition-all">
-              My List
+            <button className="bannerButton bg-[gray]/70">
+              <AiOutlineInfoCircle className="h-5 w-5 md:h-8 md:w-8" />
+              More Info
             </button>
           </div>
           <h1 className="w-[45rem] leading-[1.3] pt-[1rem] text-[0.8rem] max-w-[360px] h-[80px]">
