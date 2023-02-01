@@ -37,7 +37,6 @@ function HoverVideoCard({ handleClick, movie, trailerUrl, isLiked = false }) {
       //   setGenres(data.genres);
       // }
     }
-
     fetchMovie();
   }, [movie]);
 
