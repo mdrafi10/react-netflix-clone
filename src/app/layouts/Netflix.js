@@ -9,11 +9,11 @@ function Netflix() {
     <>
       <Nav />
       <Banner />
-      <Row
+      {/* <Row
         title="NETFLIX ORGINALS"
         fetchUrl={requests.fetchNetflixOriginals}
         isLargeRow={true}
-      />
+      /> */}
       <Row title="Treading Now" fetchUrl={requests.fetchTreading} />
       <Row title="Top Rated" fetchUrl={requests.fetchTopRated} />
       <Row title="Action Movies" fetchUrl={requests.fetchActionMovies} />

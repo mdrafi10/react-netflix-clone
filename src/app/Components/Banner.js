@@ -8,13 +8,19 @@ import { truncate } from "../utils/helpers";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
+const API_KEY = "fb5d239509124514bb487d53a31dc9f7";
+
 const Banner = () => {
   const [movie, setMovie] = useState([]);
   const navigate = useNavigate();
+  const [trailer, setTrailer] = useState("");
+  const [trailerUrl, setTrailerUrl] = useState("");
+  // const [genres, setGenres] = useState([]);
 
+  // face the single banner movie
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(requests.fetchNetflixOriginals);
+      const request = await axios.get(requests.fetchTreading);
       setMovie(
         request.data.results[
           Math.floor(Math.random() * request.data.results.length - 1)
@@ -25,18 +31,48 @@ const Banner = () => {
     fetchData();
   }, []);
 
-  const handleClick = () => {
+  // face trailer youtube url exm: v=fdf342TfdiY
+  useEffect(() => {
+    if (!movie) return;
+    // face trailer youtube url by Movie api
+    async function fetchMovie() {
+      const data = await fetch(
+        `https://api.themoviedb.org/3/${
+          movie?.media_type === "tv" ? "tv" : "movie"
+        }/${
+          movie?.id
+        }?api_key=${API_KEY}&language=en-US&append_to_response=videos`
+      ).then((response) => response.json());
+      if (data?.videos) {
+        const index = data.videos.results.findIndex(
+          (element) => element.type === "Trailer"
+        );
+        setTrailer(data.videos?.results[index]?.key);
+      }
+      // if (data?.genres) {
+      //   setGenres(data.genres);
+      // }
+    }
+
+    fetchMovie();
+
+    // search youtube url by the move name
     movieTrailer(movie?.name || "")
       .then((url) => {
         // https://www.youtube.com/watch?v=XtMThy8QKqU
         const urlParams = new URLSearchParams(new URL(url).search);
         const urlP = urlParams.get("v");
-        navigate({ pathname: "/tuber", search: `id=${urlP}` });
+        setTrailerUrl(urlP);
       })
-      .catch((error) => {
-        console.log(error);
-        navigate("/player");
-      });
+      .catch((error) => console.log(error));
+  }, [movie]);
+
+  const finalTrailer = trailer || trailerUrl;
+
+  const handleClick = () => {
+    finalTrailer
+      ? navigate({ pathname: "/tuber", search: `id=${finalTrailer}` })
+      : navigate("/player");
   };
 
   return (
