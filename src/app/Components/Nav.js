@@ -54,7 +54,7 @@ const Nav = () => {
               src="images/avatar.png"
               title="Profile"
               alt="profile"
-              className=" w-[40px] object-contain cursor-pointer"
+              className=" w-[40px] object-contain cursor-pointer rounded"
               onClick={() => navigate("/profile")}
             />
           </div>
