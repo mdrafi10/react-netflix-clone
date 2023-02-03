@@ -30,7 +30,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const app = firebase.app();
-console.log("app: ", app);
 // const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export default app;

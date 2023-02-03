@@ -1,12 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { goToBillingPortal } from "../lib/stripe";
+import { updateSubs } from "../redux/slices/authSlice";
 import { subsLocally } from "../utils/fetchUser";
 import { auth } from "../utils/firebase";
-import { goToBillingPortal } from "../utils/helpers";
 import Membership from "./Membership";
 import Nav from "./Nav";
 
 function Account() {
   const subscription = subsLocally();
+  const dispatch = useDispatch();
 
   return (
     <div className="">
@@ -46,7 +49,10 @@ function Account() {
           <h4 className="text-lg text-[gray]">Settings</h4>
           <p
             className="col-span-3 cursor-pointer text-blue-500 hover:underline"
-            onClick={() => auth.signOut()}
+            onClick={() => {
+              auth.signOut();
+              dispatch(updateSubs(null));
+            }}
           >
             Sign out of all devices
           </p>

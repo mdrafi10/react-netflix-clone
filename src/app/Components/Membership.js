@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { goToBillingPortal } from "../lib/stripe";
 import { selectUser } from "../redux/slices/authSlice";
 import { fetchUser, subsLocally } from "../utils/fetchUser";
-import { goToBillingPortal } from "../utils/helpers";
 import Loader from "./Loader";
 
 function Membership() {

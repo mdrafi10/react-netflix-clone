@@ -1,8 +1,7 @@
 import React from "react";
 import { AppForm, FormInput, FormBtn } from "../shared/Form";
 import * as Yup from "yup";
-import { auth } from "../../utils/firebase";
-import firebase from "firebase/app";
+import useAuth from "../../hooks/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
@@ -11,38 +10,11 @@ const validationSchema = Yup.object().shape({
 
 const Auth = () => {
   const [isLogin, setIsLogin] = React.useState(true);
+  const { signIn, signUp, loginWIthGoogle } = useAuth();
 
   const HandleLoginSignup = (values) => {
-    if (isLogin) login(values.email, values.password);
+    if (isLogin) signIn(values.email, values.password);
     else signUp(values.email, values.password);
-  };
-
-  const loginWIthGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then((userCredential) => {
-      // addUserToDatabase(userCredential.user);
-      console.log(userCredential.user);
-    });
-  };
-
-  const signUp = (email, password) => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // addUserToDatabase(userCredential.user);
-        console.log(userCredential.user);
-      })
-      .catch((error) => {
-        alert(error.message);
-        console.log(error);
-      });
-  };
-
-  const login = (email, password) => {
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      alert(error.message);
-      console.log(error);
-    });
   };
 
   // const addUserToDatabase = async (user) => {

@@ -4,8 +4,10 @@ import Table from "./Table";
 import Loader from "./Loader";
 import { Link } from "react-router-dom";
 import { auth, db } from "../utils/firebase";
-import { loadStripe } from "@stripe/stripe-js";
 import LoaderMe from "./shared/LoaderMe";
+import { loadCheckout } from "../lib/stripe";
+import { useDispatch } from "react-redux";
+import { updateSubs } from "../redux/slices/authSlice";
 
 function Plans({ user }) {
   const [products, setProducts] = useState([]);
@@ -15,36 +17,14 @@ function Plans({ user }) {
   );
   const [isBillingLoading, setBillingLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   // subscribe button
   const subscribeToPlan = async () => {
     if (!user) return;
 
-    // loadCheckout(selectedPlan?.prices[0].id);
     setBillingLoading(true);
-
-    const docRef = await db
-      .collection("customers")
-      .doc(user.uid)
-      .collection("checkout_sessions")
-      .add({
-        price: selectedPlanId,
-        success_url: window.location.origin,
-        cancel_url: window.location.origin,
-      });
-    docRef.onSnapshot(async (snap) => {
-      const { error, sessionId } = snap.data();
-
-      if (error) {
-        alert(`An error occurred: ${error.message}`);
-      }
-      if (sessionId) {
-        const stripe = await loadStripe(
-          "pk_test_51MN137IeuJp1aKAfQ55eXrykTGwoRlS4kW9Kd5Cv5FmSAzOIoDDuBRi9q6M23v3AE40G7yu0JcyYzDxGj5PNmioD00kDXwr0Pu"
-        );
-        stripe.redirectToCheckout({ sessionId });
-      }
-    });
+    loadCheckout(user, selectedPlanId);
   };
 
   // get 3 products of netflix plan
@@ -84,7 +64,10 @@ function Plans({ user }) {
         </Link>
         <button
           className="text-lg font-medium hover:underline"
-          onClick={() => auth.signOut()}
+          onClick={() => {
+            auth.signOut();
+            dispatch(updateSubs(null));
+          }}
         >
           Sign Out
         </button>

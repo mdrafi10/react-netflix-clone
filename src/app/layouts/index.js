@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../redux/slices/authSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSubs, selectUser, updateSubs } from "../redux/slices/authSlice";
 import Netflix from "./Netflix";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginScreen from "./LoginScreen";
@@ -13,21 +13,22 @@ import { db } from "../utils/firebase";
 
 function Layouts() {
   const subs = subsLocally();
-  const [subscription, setSubscription] = useState(null || subs);
+  const subscription = useSelector(selectSubs) || subs;
   const localUser = fetchUser();
   const user = useSelector(selectUser) || localUser;
+  const dispatch = useDispatch();
   // const user = {};
 
   useEffect(() => {
     if (!user) return;
 
+    // setSubscription(null);
     db.collection("customers")
       .doc(user?.uid)
       .collection("subscriptions")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach(async (subscription) => {
-          console.log("inner-subscription", subscription.data());
           const subsData = {
             role: subscription.data().role,
             current_period_end: subscription.data().current_period_end.seconds,
@@ -35,11 +36,11 @@ function Layouts() {
             current_period_start:
               subscription.data().current_period_start.seconds,
           };
-          setSubscription(subsData);
+          dispatch(updateSubs(subsData));
           localStorage.setItem("subscript", JSON.stringify(subsData));
         });
       });
-  }, [user?.uid, user]);
+  }, [user?.uid, user, dispatch]);
 
   return (
     <div>
