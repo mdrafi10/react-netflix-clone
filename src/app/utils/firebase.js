@@ -24,12 +24,16 @@ const firebaseConfig = {
 // const app = !firebase.apps.length
 //   ? firebase.initializeApp(firebaseConfig)
 //   : firebase.app();
+// const app = firebase.initializeApp(firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const app = firebase.app();
+console.log("app: ", app);
 // const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
+export default app;
 export { auth, db };
 
 // FIREBASE_API_KEY=AIzaSyCnINlTd5PMyOGVQGXseiS5kEswBdwIVHU

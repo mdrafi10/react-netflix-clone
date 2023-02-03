@@ -27,10 +27,11 @@ function Layouts() {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach(async (subscription) => {
-          console.log("inner-subscription", subscription);
+          console.log("inner-subscription", subscription.data());
           const subsData = {
             role: subscription.data().role,
             current_period_end: subscription.data().current_period_end.seconds,
+            cancel_at_period_end: subscription.data().cancel_at_period_end,
             current_period_start:
               subscription.data().current_period_start.seconds,
           };

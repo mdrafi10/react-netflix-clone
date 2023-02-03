@@ -1,48 +1,59 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../redux/slices/authSlice";
-import { fetchUser } from "../utils/fetchUser";
+import { subsLocally } from "../utils/fetchUser";
 import { auth } from "../utils/firebase";
+import { goToBillingPortal } from "../utils/helpers";
+import Membership from "./Membership";
 import Nav from "./Nav";
-import PlansScreen from "./PlansScreen";
 
-function Profile() {
-  const localUser = fetchUser();
-  const user = useSelector(selectUser) || localUser;
+function Account() {
+  const subscription = subsLocally();
 
   return (
-    <div>
+    <div className="">
       <Nav />
-      <div className="text-white w-full h-screen flex justify-center pt-36">
-        <div className="max-w-[760px] w-[700px]">
-          <h1 className="text-5xl font-medium border-b border-gray-800 mb-6 pb-4">
-            Edit Profile
-          </h1>
-          <div className="flex gap-6 items-start flex-col sm:flex-row">
-            <img
-              src="images/avatar.png"
-              alt="avatar"
-              className="w-[100px] object-contain"
-            />
-            <div className="sm:flex-1 w-full sm:w-auto">
-              <h3 className="text-sm font-bold text-white bg-gray-500 py-2 px-4">
-                {user?.email}
-              </h3>
-              {/* Subscribe plans*/}
-              <PlansScreen />
-              {/* Sign Out Button */}
-              <button
-                onClick={() => auth.signOut()}
-                className="text-white mr-5 py-[8px] rounded px-5 bg-[#e50914] font-semibold border-none w-full"
-              >
-                Sign out
-              </button>
-            </div>
+      <main className="mx-auto max-w-6xl px-5 pt-24 pb-12 transition-all md:px-10 text-white">
+        <div className="flex flex-col gap-x-4 md:flex-row md:items-center">
+          <h1 className="text-3xl md:text-4xl">Account</h1>
+          <div className="-ml-0.5 flex items-center gap-x-1.5">
+            <img src="https://rb.gy/4vfk4r" alt="" className="h-7 w-7" />
+            <p className="text-xs font-semibold text-[#747474]">
+              Member since{" "}
+              {new Date(
+                subscription?.current_period_start * 1000
+              ).toLocaleDateString()}
+            </p>
           </div>
         </div>
-      </div>
+
+        <Membership />
+
+        <div className="mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 md:border-t md:border-b-0 md:px-0 md:pb-0">
+          <h4 className="text-lg text-[gray]">Plan Details</h4>
+          {/* Find the current plan */}
+          <div className="col-span-2 font-medium capitalize">
+            {subscription?.role}
+          </div>
+          <p
+            className="cursor-pointer text-blue-500 hover:underline md:text-right"
+            onClick={goToBillingPortal}
+          >
+            Change plan
+          </p>
+        </div>
+
+        {/* Logout */}
+        <div className="mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 md:border-t md:border-b-0 md:px-0">
+          <h4 className="text-lg text-[gray]">Settings</h4>
+          <p
+            className="col-span-3 cursor-pointer text-blue-500 hover:underline"
+            onClick={() => auth.signOut()}
+          >
+            Sign out of all devices
+          </p>
+        </div>
+      </main>
     </div>
   );
 }
 
-export default Profile;
+export default Account;
