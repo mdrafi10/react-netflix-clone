@@ -1,7 +1,7 @@
 import React from "react";
 import { Circles } from "react-loader-spinner";
 
-function Loader({ loading, subs }) {
+function LoaderMe({ loading, subs }) {
   return (
     <div className="w-full flex justify-center">
       <Circles
@@ -18,4 +18,4 @@ function Loader({ loading, subs }) {
   );
 }
 
-export default Loader;
+export default LoaderMe;

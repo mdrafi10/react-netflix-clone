@@ -4,7 +4,7 @@ import { selectUser } from "../redux/slices/authSlice";
 import { db } from "../utils/firebase";
 import { loadStripe } from "@stripe/stripe-js";
 import { fetchUser } from "../utils/fetchUser";
-import Loader from "./shared/Loader";
+import LoaderMe from "./shared/LoaderMe";
 
 function PlansScreen({ title, pixel, onClick, subs }) {
   const [products, setProducts] = useState([]);
@@ -79,7 +79,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
         stripe.redirectToCheckout({ sessionId });
       }
     });
-    setLoading1(false);
+    // setLoading1(false);
   };
 
   return (
@@ -89,7 +89,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
           !subscription && "mb-8"
         }`}
       >
-        Plans {loading && <Loader loading={loading} />}
+        Plans {loading && <LoaderMe loading={loading} />}
         {subscription && <span>(Current Plan: {subscription?.role})</span>}
       </h3>
       {subscription && (
@@ -126,7 +126,7 @@ function PlansScreen({ title, pixel, onClick, subs }) {
             >
               {loading1 ? (
                 productData.prices.priceId === productID ? (
-                  <Loader loading={loading1} subs />
+                  <LoaderMe loading={loading1} subs />
                 ) : isCurrentPackage ? (
                   "Current Package"
                 ) : (

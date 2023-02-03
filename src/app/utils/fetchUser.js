@@ -5,3 +5,11 @@ export const fetchUser = () => {
       : localStorage.clear();
   return userInfo;
 };
+
+export const subsLocally = () => {
+  const subs =
+    localStorage.getItem("subscript") !== undefined
+      ? JSON.parse(localStorage.getItem("subscript"))
+      : localStorage.clear();
+  return subs;
+};

@@ -1,7 +1,7 @@
 import React from "react";
 import { AppForm, FormInput, FormBtn } from "../shared/Form";
 import * as Yup from "yup";
-import { auth, db } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
 import firebase from "firebase/app";
 
 const validationSchema = Yup.object().shape({
@@ -20,7 +20,8 @@ const Auth = () => {
   const loginWIthGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then((userCredential) => {
-      addUserToDatabase(userCredential.user);
+      // addUserToDatabase(userCredential.user);
+      console.log(userCredential.user);
     });
   };
 
@@ -28,7 +29,8 @@ const Auth = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        addUserToDatabase(userCredential.user);
+        // addUserToDatabase(userCredential.user);
+        console.log(userCredential.user);
       })
       .catch((error) => {
         alert(error.message);
@@ -43,18 +45,18 @@ const Auth = () => {
     });
   };
 
-  const addUserToDatabase = async (user) => {
-    const { uid, displayName, email, photoURL } = user;
-    const userRef = await db.collection("users").doc(uid).get();
-    if (!userRef.exists) {
-      db.collection("users").doc(uid).set({
-        uid,
-        name: displayName,
-        email,
-        image: photoURL,
-      });
-    }
-  };
+  // const addUserToDatabase = async (user) => {
+  //   const { uid, displayName, email, photoURL } = user;
+  //   const userRef = await db.collection("users").doc(uid).get();
+  //   if (!userRef.exists) {
+  //   db.collection("users").doc(uid).set({
+  //     uid,
+  //     name: displayName,
+  //     email,
+  //     image: photoURL,
+  //   });
+  //   }
+  // };
 
   return (
     <div className="p-5">
