@@ -15,7 +15,7 @@ const AuthContext = createContext({
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       setInitialLoading(false);
     });
     return unsubscribe;
-  }, [auth, dispatch]);
+  }, [dispatch]);
 
   const loginWIthGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();

@@ -10,6 +10,7 @@ import Player from "../Components/Player";
 import TubePlayer from "../Components/TubePlayer";
 import Plans from "../Components/Plans";
 import { db } from "../utils/firebase";
+import MyList from "../Components/MyList";
 
 function Layouts() {
   const subs = subsLocally();
@@ -53,6 +54,7 @@ function Layouts() {
             // <h1 className="text-white">hello</h1>
             <Routes>
               <Route path="/profile" exact element={<Profile />} />
+              <Route path="/list" exact element={<MyList />} />
               <Route path="/player" exact element={<Player />} />
               <Route path="/tuber" exact element={<TubePlayer />} />
               <Route path="/" exact element={<Netflix />} />

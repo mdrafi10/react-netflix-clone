@@ -5,6 +5,7 @@ export const authSlice = createSlice({
   initialState: {
     user: null,
     subsCription: null,
+    singleMovie: {},
   },
   reducers: {
     updateUser: (state, action) => {
@@ -16,12 +17,17 @@ export const authSlice = createSlice({
     updateSubs: (state, action) => {
       state.subsCription = action.payload;
     },
+    updateSingleMovie: (state, action) => {
+      state.singleMovie = action.payload;
+    },
   },
 });
 
-export const { updateUser, removeUser, updateSubs } = authSlice.actions;
+export const { updateUser, removeUser, updateSubs, updateSingleMovie } =
+  authSlice.actions;
 
 export const selectUser = (state) => state.auth.user;
 export const selectSubs = (state) => state.auth.subsCription;
+export const selectSingleMovie = (state) => state.auth.singleMovie;
 
 export default authSlice.reducer;

@@ -6,7 +6,7 @@ import video from "../assets/video.mp4";
 export default function Player() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const trailerUrl = searchParams.get("id");
+  const allData = searchParams.get("id");
 
   return (
     <div>
@@ -20,7 +20,7 @@ export default function Player() {
         </div>
         <video
           className="w-full h-full object-cover"
-          src={trailerUrl ? trailerUrl : video}
+          src={allData?.video ? allData?.video : video}
           autoPlay
           loop
           controls
