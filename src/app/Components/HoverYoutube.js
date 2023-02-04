@@ -8,7 +8,7 @@ function HoverYoutube({ trailerUrl, onClick }) {
       width="100%"
       height="100%"
       playing
-      muted={false}
+      muted={true}
       onPause={onClick}
     />
   );
