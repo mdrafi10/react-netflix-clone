@@ -7,6 +7,8 @@ import { truncate } from "../utils/helpers";
 
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { updateSingleMovie } from "../redux/slices/authSlice";
 
 const API_KEY = "fb5d239509124514bb487d53a31dc9f7";
 
@@ -15,6 +17,7 @@ const Banner = () => {
   const navigate = useNavigate();
   const [trailer, setTrailer] = useState("");
   const [trailerUrl, setTrailerUrl] = useState("");
+  const dispatch = useDispatch();
   // const [genres, setGenres] = useState([]);
 
   // face the single banner movie
@@ -70,6 +73,7 @@ const Banner = () => {
   const finalTrailer = trailer || trailerUrl;
 
   const handleClick = () => {
+    dispatch(updateSingleMovie({ movie }));
     finalTrailer
       ? navigate({ pathname: "/tuber", search: `id=${finalTrailer}` })
       : navigate("/player");

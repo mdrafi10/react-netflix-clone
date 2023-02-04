@@ -26,7 +26,7 @@ function Netflix() {
       <Row title="Treading Now" fetchUrl={requests.fetchTreading} />
       <Row title="Top Rated" fetchUrl={requests.fetchTopRated} />
       <Row title="Action Movies" fetchUrl={requests.fetchActionMovies} />
-      <Row title="My List" myListMovie={list} />
+      {list.length > 0 && <Row title="My List" myListMovie={list} />}
       <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies} />
       <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies} />
       <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies} />

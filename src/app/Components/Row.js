@@ -108,7 +108,7 @@ const Row = ({ title, fetchUrl, isLargeRow, myListMovie, isList }) => {
                           className={`w-full h-full object-contain ${
                             isHovered.id !== movie.id && "!-z-50"
                           }`}
-                          alt={movie.name}
+                          alt={movie.title}
                           key={movie.id}
                           onMouseEnter={() => handleClick(movie)}
                           onMouseLeave={() => handleClick({})}

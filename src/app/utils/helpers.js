@@ -26,6 +26,7 @@ const toastStyle = {
 };
 
 export const addRemoveList = async (addToList, uid, movie) => {
+  if (!movie?.id) return;
   if (addToList) {
     db.collection("customers")
       .doc(uid)
@@ -52,7 +53,11 @@ export const addRemoveList = async (addToList, uid, movie) => {
       .collection("myList")
       .doc(movie?.id.toString())
       .set({
-        ...movie,
+        id: movie?.id,
+        poster_path: movie?.poster_path,
+        backdrop_path: movie?.backdrop_path,
+        title: movie?.title,
+        original_title: movie?.original_title,
       })
       .then(() => {
         toast(
