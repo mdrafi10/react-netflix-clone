@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "../axios/axios";
-import movieTrailer from "movie-trailer";
+// import movieTrailer from "movie-trailer";
 import HoverVideoCard from "./HoverVideoCard";
 import { Toaster } from "react-hot-toast";
 
@@ -24,16 +24,16 @@ const Row = ({ title, fetchUrl, isLargeRow, myListMovie, isList }) => {
   const handleClick = (movie) => {
     setIsHovered(movie);
 
-    movieTrailer(movie?.name || "")
-      .then((url) => {
-        // https://www.youtube.com/watch?v=XtMThy8QKqU
-        const urlParams = new URLSearchParams(new URL(url).search);
-        setTrailerUrl(urlParams.get("v"));
-      })
-      .catch((error) => {
-        console.log(error);
-        setTrailerUrl("");
-      });
+    // movieTrailer(movie?.name || "")
+    //   .then((url) => {
+    //     // https://www.youtube.com/watch?v=XtMThy8QKqU
+    //     const urlParams = new URLSearchParams(new URL(url).search);
+    //     setTrailerUrl(urlParams.get("v"));
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setTrailerUrl("");
+    //   });
   };
   const allMovies = movies || myListMovie;
   return (

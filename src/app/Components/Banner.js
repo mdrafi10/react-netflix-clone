@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import requests from "../Request/request";
-import movieTrailer from "movie-trailer";
+// import movieTrailer from "movie-trailer";
 import { truncate } from "../utils/helpers";
 
 import { FaPlay } from "react-icons/fa";
@@ -60,14 +60,14 @@ const Banner = () => {
     fetchMovie();
 
     // search youtube url by the move name
-    movieTrailer(movie?.name || "")
-      .then((url) => {
-        // https://www.youtube.com/watch?v=XtMThy8QKqU
-        const urlParams = new URLSearchParams(new URL(url).search);
-        const urlP = urlParams.get("v");
-        setTrailerUrl(urlP);
-      })
-      .catch((error) => console.log(error));
+    // movieTrailer(movie?.name || "")
+    //   .then((url) => {
+    //     // https://www.youtube.com/watch?v=XtMThy8QKqU
+    //     const urlParams = new URLSearchParams(new URL(url).search);
+    //     const urlP = urlParams.get("v");
+    //     setTrailerUrl(urlP);
+    //   })
+    //   .catch((error) => console.log(error));
   }, [movie]);
 
   const finalTrailer = trailer || trailerUrl;
