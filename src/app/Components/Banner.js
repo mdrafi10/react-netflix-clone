@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import requests from "../Request/request";
-// import movieTrailer from "movie-trailer";
+import movieTrailer from "movie-trailer";
 import { truncate } from "../utils/helpers";
 
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { updateSingleMovie } from "../redux/slices/authSlice";
-
-const API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);
@@ -42,9 +40,9 @@ const Banner = () => {
       const data = await fetch(
         `https://api.themoviedb.org/3/${
           movie?.media_type === "tv" ? "tv" : "movie"
-        }/${
-          movie?.id
-        }?api_key=${API_KEY}&language=en-US&append_to_response=videos`
+        }/${movie?.id}?api_key=${
+          process.env.REACT_APP_MOVIE_API_KEY
+        }&language=en-US&append_to_response=videos`
       ).then((response) => response.json());
       if (data?.videos) {
         const index = data.videos.results.findIndex(
@@ -60,14 +58,14 @@ const Banner = () => {
     fetchMovie();
 
     // search youtube url by the move name
-    // movieTrailer(movie?.name || "")
-    //   .then((url) => {
-    //     // https://www.youtube.com/watch?v=XtMThy8QKqU
-    //     const urlParams = new URLSearchParams(new URL(url).search);
-    //     const urlP = urlParams.get("v");
-    //     setTrailerUrl(urlP);
-    //   })
-    //   .catch((error) => console.log(error));
+    movieTrailer(movie?.name || "")
+      .then((url) => {
+        // https://www.youtube.com/watch?v=XtMThy8QKqU
+        const urlParams = new URLSearchParams(new URL(url).search);
+        const urlP = urlParams.get("v");
+        setTrailerUrl(urlP);
+      })
+      .catch((error) => console.log(error));
   }, [movie]);
 
   const finalTrailer = trailer || trailerUrl;
