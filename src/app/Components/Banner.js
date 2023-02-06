@@ -10,7 +10,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { updateSingleMovie } from "../redux/slices/authSlice";
 
-const API_KEY = "fb5d239509124514bb487d53a31dc9f7";
+const API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);

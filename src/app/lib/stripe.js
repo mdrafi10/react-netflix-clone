@@ -30,9 +30,7 @@ export const loadCheckout = async (user, priceId) => {
       alert(`An error occurred: ${error.message}`);
     }
     if (sessionId) {
-      const stripe = await loadStripe(
-        "pk_test_51MN137IeuJp1aKAfQ55eXrykTGwoRlS4kW9Kd5Cv5FmSAzOIoDDuBRi9q6M23v3AE40G7yu0JcyYzDxGj5PNmioD00kDXwr0Pu"
-      );
+      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
       stripe.redirectToCheckout({ sessionId });
     }
   });

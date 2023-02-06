@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser, updateSingleMovie } from "../redux/slices/authSlice";
 import useAddListed from "../hooks/useAddListed";
 
-const API_KEY = "fb5d239509124514bb487d53a31dc9f7";
+const API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
 
 function HoverVideoCard({ handleClick, movie, trailerUrl }) {
   const [trailer, setTrailer] = useState("");

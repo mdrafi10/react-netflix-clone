@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then((userCredential) => {
       // addUserToDatabase(userCredential.user);
-      console.log(userCredential.user);
+      // console.log(userCredential.user);
     });
   };
 
